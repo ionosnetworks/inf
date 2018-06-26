@@ -20,7 +20,7 @@
 //  + combined operations such as AddRound/MulAdd etc
 //  + exchanging data in decimal32/64/128 formats
 //
-package inf // import "gopkg.in/inf.v0"
+package inf
 
 // TODO:
 //  - avoid excessive deep copying (quo and rounders)
@@ -534,20 +534,6 @@ func (z *Dec) SetString(s string) (*Dec, bool) {
 	}
 	// err == io.EOF => scan consumed all of s
 	return z, true
-}
-
-// Scan is a support routine for fmt.Scanner; it sets z to the value of
-// the scanned number. It accepts the decimal formats 'd' and 'f', and
-// handles both equivalently. Bases 2, 8, 16 are not supported.
-// The scale of z is the number of digits after the decimal point
-// (including any trailing 0s), or 0 if there is no decimal point.
-func (z *Dec) Scan(s fmt.ScanState, ch rune) error {
-	if ch != 'd' && ch != 'f' && ch != 's' && ch != 'v' {
-		return fmt.Errorf("Dec.Scan: invalid verb '%c'", ch)
-	}
-	s.SkipSpace()
-	_, err := z.scan(s)
-	return err
 }
 
 // Gob encoding version
