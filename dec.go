@@ -586,6 +586,14 @@ func (z *Dec) GobDecode(buf []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaler interface.
+func (x *Dec) MarshalJSON() ([]byte, error) {
+	if x == nil {
+		return []byte{'n', 'u', 'l', 'l'}, nil
+	}
+	return []byte("\"" + x.String() + "\""), nil
+}
+
 // MarshalText implements the encoding.TextMarshaler interface.
 func (x *Dec) MarshalText() ([]byte, error) {
 	return []byte(x.String()), nil
